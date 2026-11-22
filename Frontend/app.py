@@ -139,7 +139,7 @@ div[data-testid="stMetric"] {
 </style>
 """, unsafe_allow_html=True)
 
-API_URL = "https://smart-agriculture-system-viup.onrender.com/predict"
+API_URL = "https://smart-agriculture-system-1-99u2.onrender.com/predict"
 
 # ---------------- SIDEBAR ----------------
 st.sidebar.markdown("## 🌱 Smart Agriculture")
