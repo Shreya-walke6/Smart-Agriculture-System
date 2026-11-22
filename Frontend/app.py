@@ -2,6 +2,15 @@
 import streamlit as st
 import requests
 import pandas as pd
+import joblib
+
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+MODEL_DIR = BASE_DIR / "Backend"
+
+dt_model = joblib.load(MODEL_DIR / "decision_tree.pkl")
+rf_model = joblib.load(MODEL_DIR / "random_forest.pkl")
 
 # ---------------- PAGE CONFIG ----------------
 st.set_page_config(
@@ -274,18 +283,13 @@ if st.button("🔍 Predict Crop Health", use_container_width=True):
 
     try:
         with st.spinner("Analyzing crop parameters..."):
+                if model_name == "Decision Tree":
+                    prediction_value = dt_model.predict(pd.DataFrame([input_data]))[0]
+                else:
+                    prediction_value = rf_model.predict(pd.DataFrame([input_data]))[0]
 
-            response = requests.post(
-                API_URL,
-                params={"model": model_name},
-                json=input_data,
-                timeout=15
-            )
-
-            response.raise_for_status()
-            result = response.json()
-
-        prediction = result["crop_health"]
+                prediction = "Stressed" if int(prediction_value) == 1 else "Healthy"
+        
 
         st.markdown(
             '<div class="section-title">🔬 Crop Health Prediction Result</div>',
