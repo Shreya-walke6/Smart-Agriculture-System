@@ -265,6 +265,16 @@ with col3:
     )
 
 st.markdown("---")
+# ============== IRRIGATION RECOMMENDATION ==============
+
+st.markdown("### 💧 Irrigation Recommendation")
+
+if soil_moisture < 30:
+    st.warning("💧 Irrigation Required")
+    st.write("Soil moisture is below the demo threshold.")
+else:
+    st.success("✅ No Irrigation Required")
+    st.write("Soil moisture is at or above the demo threshold.")
 
 # ---------------- PREDICTION ----------------
 if st.button("🔍 Predict Crop Health", use_container_width=True):
